@@ -9,31 +9,27 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-class PantallaMenu extends Pantalla{
+public class PantallaAcercaDe extends Pantalla{
 
     private final Juego juego;
     private Texture texturaFondo;
 
-    private Stage escenaMenu;
+    private Stage escenaAD;
 
-    public PantallaMenu(Juego juego) {
-        this.juego = juego;
+    public PantallaAcercaDe(Juego juego) {
+        this.juego=juego;
     }
-
 
     @Override
     public void show() {
         texturaFondo = new Texture("fondoSpace.jpg");
-        crearMenu();
+        crear();
     }
 
-    private void crearMenu(){
-        escenaMenu = new Stage(vista);
+    private void crear() {
+        escenaAD = new Stage(vista);
         Texture texturaBtnJugar = new Texture("button_xd.png");
         TextureRegionDrawable trdJugar = new TextureRegionDrawable(new TextureRegion(texturaBtnJugar));
-
-        Texture texturaBtnAD = new Texture("button_xd.png");
-        TextureRegionDrawable trdAD = new TextureRegionDrawable(new TextureRegion(texturaBtnAD));
 
         //img btn presionado
 
@@ -42,45 +38,23 @@ class PantallaMenu extends Pantalla{
         ImageButton btnJugar = new ImageButton(trdJugar,trdJugarP);
         btnJugar.setPosition(ANCHO/2-btnJugar.getWidth()/2,2*ALTO/3);
 
-        Texture texturaBtnADP = new Texture("btnp.png");
-        TextureRegionDrawable trdADP = new TextureRegionDrawable(new TextureRegion(texturaBtnADP));
-        ImageButton btnAD = new ImageButton(trdAD,trdADP);
-        btnAD.setPosition(ANCHO/2-btnJugar.getWidth()/2,1*ALTO/3);
-
         //listener
         btnJugar.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                juego.setScreen(new PantallaJuego(juego));
                 //juego.setScreen(new PantallaSpaceInvaders(juego));
                 //juego.setScreen(new PantallaMario(juego));
             }
         });
-        btnAD.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                juego.setScreen(new PantallaAcercaDe(juego));
-            }
-        });
 
-        escenaMenu.addActor(btnJugar);
-        escenaMenu.addActor(btnAD);
-        Gdx.input.setInputProcessor(escenaMenu);
+        escenaAD.addActor(btnJugar);
+        Gdx.input.setInputProcessor(escenaAD);
     }
 
     @Override
     public void render(float delta) {
 
-        borrarPantalla();
-        batch.setProjectionMatrix(camara.combined);
-
-        batch.begin();
-        batch.draw(texturaFondo, 0, 0);
-        batch.end();
-
-        escenaMenu.draw();
     }
 
     @Override
@@ -95,6 +69,6 @@ class PantallaMenu extends Pantalla{
 
     @Override
     public void dispose() {
-        texturaFondo.dispose();
+
     }
 }
