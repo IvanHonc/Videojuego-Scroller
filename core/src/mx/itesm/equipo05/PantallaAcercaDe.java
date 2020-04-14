@@ -29,25 +29,25 @@ public class PantallaAcercaDe extends Pantalla{
 
     private void crear() {
         escenaAD=new Stage(vista);
-        Texture texturaBtnAD = new Texture("button_xd.png");
-        TextureRegionDrawable trdAD = new TextureRegionDrawable(new TextureRegion(texturaBtnAD));
+        Texture texturaBtnReturn = new Texture("button_xd.png");
+        TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(texturaBtnReturn));
 
         //img btn presionado
 
-        Texture texturaBtnJugarP = new Texture("btnp.png");
-        TextureRegionDrawable trdADP = new TextureRegionDrawable(new TextureRegion(texturaBtnJugarP));
-        ImageButton btnAD = new ImageButton(trdAD,trdADP);
-        btnAD.setPosition(ANCHO/2-btnAD.getWidth()/2,2*ALTO/10);
+        Texture texturaBtnReturnP = new Texture("btnp.png");
+        TextureRegionDrawable trdReturnP = new TextureRegionDrawable(new TextureRegion(texturaBtnReturnP));
+        ImageButton btnReturn = new ImageButton(trdReturn,trdReturnP);
+        btnReturn.setPosition(ANCHO/2-btnReturn.getWidth()/2,2*ALTO/10);
 
         //listener
-        btnAD.addListener(new ClickListener() {
+        btnReturn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 juego.setScreen(new PantallaMenu(juego));
             }
         });
-        escenaAD.addActor(btnAD);
+        escenaAD.addActor(btnReturn);
         Gdx.input.setInputProcessor(escenaAD);
     }
 
