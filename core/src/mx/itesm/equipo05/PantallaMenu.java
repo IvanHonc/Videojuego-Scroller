@@ -62,22 +62,23 @@ class PantallaMenu extends Pantalla{
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 juego.setScreen(new PantallaJuego(juego));
-                //juego.setScreen(new PantallaSpaceInvaders(juego));
-                //juego.setScreen(new PantallaMario(juego));
+
             }
         });
         btnAD.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                juego.setScreen(new PantallaAcercaDe(juego));
+                juego.setScreen(new PantallaOpciones(juego));
+
             }
         });
         btnO.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                juego.setScreen(new PantallaOpciones(juego));
+                juego.setScreen(new PantallaAcercaDe(juego));
+
             }
         });
 
@@ -89,14 +90,11 @@ class PantallaMenu extends Pantalla{
 
     @Override
     public void render(float delta) {
-
         borrarPantalla();
         batch.setProjectionMatrix(camara.combined);
-
         batch.begin();
         batch.draw(texturaFondo, 0, 0);
         batch.end();
-
         escenaMenu.draw();
     }
 
