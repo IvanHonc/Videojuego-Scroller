@@ -10,9 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class PantallaAcercaDe extends Pantalla{
+
     private Stage escenaAD;
     private final Juego juego;
     private Texture texturaFondo;
+
+    private Texto textoTitulo;
 
     public PantallaAcercaDe(Juego juego) {
         this.juego=juego;
@@ -55,7 +58,11 @@ public class PantallaAcercaDe extends Pantalla{
         borrarPantalla();
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
+        //Fondo
         batch.draw(texturaFondo, 0, 0);
+        //Texto
+        textoTitulo = new Texto("fuenteTecno.fnt");
+        textoTitulo.render(batch, "Acerca De", ANCHO/2, ALTO-ALTO/12);
         batch.end();
         escenaAD.draw();
     }

@@ -46,17 +46,17 @@ class PantallaMenu extends Pantalla{
         Texture texturaBtnJugarP = new Texture("btnp.png");
         TextureRegionDrawable trdJugarP = new TextureRegionDrawable(new TextureRegion(texturaBtnJugarP));
         ImageButton btnJugar = new ImageButton(trdJugar,trdJugarP);
-        btnJugar.setPosition(ANCHO/2-btnJugar.getWidth()/2,8*ALTO/10);
+        btnJugar.setPosition(ANCHO/2-btnJugar.getWidth()/2,6*ALTO/10);
 
         Texture texturaBtnADP = new Texture("btnp.png");
         TextureRegionDrawable trdADP = new TextureRegionDrawable(new TextureRegion(texturaBtnADP));
         ImageButton btnAD = new ImageButton(trdAD,trdADP);
-        btnAD.setPosition(ANCHO/2-btnAD.getWidth()/2,5*ALTO/10);
+        btnAD.setPosition(ANCHO/2-btnAD.getWidth()/2,7*ALTO/20);
 
         Texture texturaBtnOP = new Texture("btnp.png");
         TextureRegionDrawable trdOP = new TextureRegionDrawable(new TextureRegion(texturaBtnOP));
         ImageButton btnO = new ImageButton(trdO,trdOP);
-        btnO.setPosition(ANCHO/2-btnO.getWidth()/2,2*ALTO/10);
+        btnO.setPosition(ANCHO/2-btnO.getWidth()/2,2*ALTO/20);
 
         //listener
         btnJugar.addListener(new ClickListener() {
@@ -97,7 +97,7 @@ class PantallaMenu extends Pantalla{
         batch.begin();
         batch.draw(texturaFondo, 0, 0);
         textoTitulo = new Texto("fuenteTecno.fnt");
-        textoTitulo.render(batch, "Ultimate Scroller", ANCHO/2, ALTO/2);
+        textoTitulo.render(batch, "Ultimate Scroller", ANCHO/2, ALTO-ALTO/12);
         batch.end();
         escenaMenu.draw();
 
