@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class PantallaOpciones extends Pantalla{
 
-    private Stage escenaO;
+    private Stage escenaOpc;
     private final Juego juego;
     private Texture texturaFondo;
 
@@ -28,19 +28,19 @@ public class PantallaOpciones extends Pantalla{
     }
 
     private void crear() {
-        escenaO=new Stage(vista);
-        Texture texturaBtnJugar = new Texture("button_xd.png");
-        TextureRegionDrawable trdJugar = new TextureRegionDrawable(new TextureRegion(texturaBtnJugar));
+        escenaOpc=new Stage(vista);
+        Texture texturaBtnOpc = new Texture("button_xd.png");
+        TextureRegionDrawable trdOpc = new TextureRegionDrawable(new TextureRegion(texturaBtnOpc));
 
         //img btn presionado
 
-        Texture texturaBtnJugarP = new Texture("btnp.png");
-        TextureRegionDrawable trdJugarP = new TextureRegionDrawable(new TextureRegion(texturaBtnJugarP));
-        ImageButton btnJugar = new ImageButton(trdJugar,trdJugarP);
-        btnJugar.setPosition(ANCHO/2-btnJugar.getWidth()/2,2*ALTO/10);
+        Texture texturaBtnOpcP = new Texture("btnp.png");
+        TextureRegionDrawable trdOpcP = new TextureRegionDrawable(new TextureRegion(texturaBtnOpcP));
+        ImageButton btnOpc = new ImageButton(trdOpc,trdOpcP);
+        btnOpc.setPosition(ANCHO/2-btnOpc.getWidth()/2,2*ALTO/10);
 
         //listener
-        btnJugar.addListener(new ClickListener() {
+        btnOpc.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -49,8 +49,8 @@ public class PantallaOpciones extends Pantalla{
                 //juego.setScreen(new PantallaMario(juego));
             }
         });
-        escenaO.addActor(btnJugar);
-        Gdx.input.setInputProcessor(escenaO);
+        escenaOpc.addActor(btnOpc);
+        Gdx.input.setInputProcessor(escenaOpc);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class PantallaOpciones extends Pantalla{
         textoTitulo = new Texto("fuenteTecno.fnt");
         textoTitulo.render(batch, "Opciones", ANCHO/2, ALTO-ALTO/12);
         batch.end();
-        escenaO.draw();
+        escenaOpc.draw();
     }
 
     @Override

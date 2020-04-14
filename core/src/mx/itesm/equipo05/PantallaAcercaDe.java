@@ -29,27 +29,25 @@ public class PantallaAcercaDe extends Pantalla{
 
     private void crear() {
         escenaAD=new Stage(vista);
-        Texture texturaBtnJugar = new Texture("button_xd.png");
-        TextureRegionDrawable trdJugar = new TextureRegionDrawable(new TextureRegion(texturaBtnJugar));
+        Texture texturaBtnAD = new Texture("button_xd.png");
+        TextureRegionDrawable trdAD = new TextureRegionDrawable(new TextureRegion(texturaBtnAD));
 
         //img btn presionado
 
         Texture texturaBtnJugarP = new Texture("btnp.png");
-        TextureRegionDrawable trdJugarP = new TextureRegionDrawable(new TextureRegion(texturaBtnJugarP));
-        ImageButton btnJugar = new ImageButton(trdJugar,trdJugarP);
-        btnJugar.setPosition(ANCHO/2-btnJugar.getWidth()/2,2*ALTO/10);
+        TextureRegionDrawable trdADP = new TextureRegionDrawable(new TextureRegion(texturaBtnJugarP));
+        ImageButton btnAD = new ImageButton(trdAD,trdADP);
+        btnAD.setPosition(ANCHO/2-btnAD.getWidth()/2,2*ALTO/10);
 
         //listener
-        btnJugar.addListener(new ClickListener() {
+        btnAD.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 juego.setScreen(new PantallaMenu(juego));
-                //juego.setScreen(new PantallaSpaceInvaders(juego));
-                //juego.setScreen(new PantallaMario(juego));
             }
         });
-        escenaAD.addActor(btnJugar);
+        escenaAD.addActor(btnAD);
         Gdx.input.setInputProcessor(escenaAD);
     }
 

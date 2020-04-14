@@ -13,9 +13,7 @@ class PantallaMenu extends Pantalla{
 
     private final Juego juego;
     private Texture texturaFondo;
-
     private Stage escenaMenu;
-
     private Texto textoTitulo;
 
     public PantallaMenu(Juego juego) {
