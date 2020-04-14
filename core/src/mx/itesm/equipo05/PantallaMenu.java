@@ -96,7 +96,8 @@ class PantallaMenu extends Pantalla{
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         batch.draw(texturaFondo, 0, 0);
-        //textoTitulo.render(batch, "Hola", ANCHO/2, ALTO/2);
+        textoTitulo = new Texto("fuenteTecno.fnt");
+        textoTitulo.render(batch, "Ultimate Scroller", ANCHO/2, ALTO/2);
         batch.end();
         escenaMenu.draw();
 
