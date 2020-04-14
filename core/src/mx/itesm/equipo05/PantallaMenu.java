@@ -16,6 +16,8 @@ class PantallaMenu extends Pantalla{
 
     private Stage escenaMenu;
 
+    private Texto textoTitulo;
+
     public PantallaMenu(Juego juego) {
         this.juego = juego;
     }
@@ -94,8 +96,10 @@ class PantallaMenu extends Pantalla{
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         batch.draw(texturaFondo, 0, 0);
+        //textoTitulo.render(batch, "Hola", ANCHO/2, ALTO/2);
         batch.end();
         escenaMenu.draw();
+
     }
 
     @Override
