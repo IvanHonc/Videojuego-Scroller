@@ -1,6 +1,9 @@
 package mx.itesm.equipo05;
 
 public class PantallaOpciones extends Pantalla{
+    public PantallaOpciones(Juego juego) {
+    }
+
     @Override
     public void show() {
 
