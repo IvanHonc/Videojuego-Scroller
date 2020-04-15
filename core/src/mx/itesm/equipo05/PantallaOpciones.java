@@ -84,18 +84,6 @@ public class PantallaOpciones extends Pantalla{
         Gdx.input.setInputProcessor(escenaOpc);
     }
 
-    private void resetOn_Off() {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("texto.txt"));
-            on_off=Boolean.parseBoolean(reader.readLine());
-            System.out.println(on_off);
-            reader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void render(float delta) {

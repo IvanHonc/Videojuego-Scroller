@@ -36,15 +36,7 @@ public abstract class Pantalla implements Screen
         vista = new StretchViewport(ANCHO, ALTO, camara);
         // El objeto que administra los trazos gráficos
         batch = new SpriteBatch();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("texto.txt"));
-            on_off=Boolean.parseBoolean(reader.readLine());
-            reader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        resetOn_Off();
     }
     // Borra la pantalla con fondo negro
     protected void borrarPantalla() {
@@ -68,5 +60,16 @@ public abstract class Pantalla implements Screen
         // Libera los recursos asignados por cada pantalla
         // Las subclases están obligadas a sobrescribir el método dispose()
         dispose();
+    }
+    public void resetOn_Off() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("texto.txt"));
+            on_off=Boolean.parseBoolean(reader.readLine());
+            reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
