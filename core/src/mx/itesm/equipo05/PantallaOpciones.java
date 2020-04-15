@@ -9,12 +9,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class PantallaOpciones extends Pantalla{
 
     private Stage escenaOpc;
     private final Juego juego;
     private Texture texturaFondo;
-    private boolean on_off;
     private Texto textoTitulo;
 
     public PantallaOpciones(Juego juego) {
@@ -24,13 +29,12 @@ public class PantallaOpciones extends Pantalla{
     @Override
     public void show() {
         texturaFondo = new Texture("fondoSpace.jpg");
-        on_off=true;
         crear();
     }
 
     private void crear() {
         escenaOpc=new Stage(vista);
-
+        resetOn_Off();
         Texture texturaBtnReturn = new Texture("btnAtras.png");
         TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(texturaBtnReturn));
         Texture texturaBtnReturnP = new Texture("btnAtrasPresionado.png");
@@ -43,7 +47,7 @@ public class PantallaOpciones extends Pantalla{
         Texture texturaBtnMusicaNo = new Texture("btnMusicaNo.png");
         TextureRegionDrawable trdMusicaNo = new TextureRegionDrawable(new TextureRegion(texturaBtnMusicaNo));
         ImageButton btnMusica;
-        if(on_off==true) {
+        if(on_off) {
             btnMusica = new ImageButton(trdMusica, trdMusicaNo);
         }else{
             btnMusica = new ImageButton(trdMusicaNo, trdMusica);
@@ -61,18 +65,36 @@ public class PantallaOpciones extends Pantalla{
         btnMusica.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(on_off==true){
-                    on_off=false;
-                }else{
-                    on_off=true;
+                try {
+                    FileWriter file = new FileWriter("texto.txt");
+                    if(on_off){
+                        file.write("false");
+                    }else{
+                        file.write("true");
+                    }
+                    file.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
                 crear();
-                //Desactivar Música
             }
         });
         escenaOpc.addActor(btnReturn);
         escenaOpc.addActor(btnMusica);
         Gdx.input.setInputProcessor(escenaOpc);
+    }
+
+    private void resetOn_Off() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("texto.txt"));
+            on_off=Boolean.parseBoolean(reader.readLine());
+            System.out.println(on_off);
+            reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

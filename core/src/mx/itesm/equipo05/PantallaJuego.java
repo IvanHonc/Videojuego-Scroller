@@ -90,14 +90,16 @@ class PantallaJuego extends Pantalla {
         AssetManager manager = new AssetManager();
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         manager.load("mapaTutorial.tmx", TiledMap.class);
-        manager.load("musicaNueva.mp3",Music.class);
+        manager.load("musicaNueva.mp3", Music.class);
         manager.load("moneda.mp3", Sound.class);
         manager.finishLoading(); //carga
         mapa = manager.get("mapaTutorial.tmx");
         rendererMapa = new OrthogonalTiledMapRenderer(mapa);
         audioFondo = manager.get("musicaNueva.mp3");
         audioFondo.setLooping(true); //infinita
-        audioFondo.play();
+        if(on_off) {
+            audioFondo.play();
+        }
         //efectos
         efecto = manager.get("moneda.mp3");
     }
