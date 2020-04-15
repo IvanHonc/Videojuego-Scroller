@@ -29,29 +29,29 @@ class PantallaMenu extends Pantalla{
 
     private void crearMenu(){
         escenaMenu = new Stage(vista);
-        Texture texturaBtnJugar = new Texture("button_xd.png");
+        Texture texturaBtnJugar = new Texture("btnJugar.png");
         TextureRegionDrawable trdJugar = new TextureRegionDrawable(new TextureRegion(texturaBtnJugar));
 
-        Texture texturaBtnAD = new Texture("button_xd.png");
+        Texture texturaBtnAD = new Texture("btnAcercaDe.png");
         TextureRegionDrawable trdAD = new TextureRegionDrawable(new TextureRegion(texturaBtnAD));
 
-        Texture texturaBtnO = new Texture("button_xd.png");
+        Texture texturaBtnO = new Texture("btnOpciones.png");
         TextureRegionDrawable trdO = new TextureRegionDrawable(new TextureRegion(texturaBtnO));
 
 
         //img btn presionado
 
-        Texture texturaBtnJugarP = new Texture("btnp.png");
+        Texture texturaBtnJugarP = new Texture("btnJugarPresionado.png");
         TextureRegionDrawable trdJugarP = new TextureRegionDrawable(new TextureRegion(texturaBtnJugarP));
         ImageButton btnJugar = new ImageButton(trdJugar,trdJugarP);
         btnJugar.setPosition(ANCHO/2-btnJugar.getWidth()/2,6*ALTO/10);
 
-        Texture texturaBtnADP = new Texture("btnp.png");
+        Texture texturaBtnADP = new Texture("btnAcercaDePresionado.png");
         TextureRegionDrawable trdADP = new TextureRegionDrawable(new TextureRegion(texturaBtnADP));
         ImageButton btnAD = new ImageButton(trdAD,trdADP);
         btnAD.setPosition(ANCHO/2-btnAD.getWidth()/2,2*ALTO/20);
 
-        Texture texturaBtnOpcP = new Texture("btnp.png");
+        Texture texturaBtnOpcP = new Texture("btnOpcionesPresionado.png");
         TextureRegionDrawable trdOpcP = new TextureRegionDrawable(new TextureRegion(texturaBtnOpcP));
         ImageButton btnOpc = new ImageButton(trdO,trdOpcP);
         btnOpc.setPosition(ANCHO/2-btnOpc.getWidth()/2,7*ALTO/20);

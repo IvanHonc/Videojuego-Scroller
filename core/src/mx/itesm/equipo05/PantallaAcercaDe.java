@@ -29,12 +29,12 @@ public class PantallaAcercaDe extends Pantalla{
 
     private void crear() {
         escenaAD=new Stage(vista);
-        Texture texturaBtnReturn = new Texture("button_xd.png");
+        Texture texturaBtnReturn = new Texture("btnAtras.png");
         TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(texturaBtnReturn));
 
         //img btn presionado
 
-        Texture texturaBtnReturnP = new Texture("btnp.png");
+        Texture texturaBtnReturnP = new Texture("btnAtrasPresionado.png");
         TextureRegionDrawable trdReturnP = new TextureRegionDrawable(new TextureRegion(texturaBtnReturnP));
         ImageButton btnReturn = new ImageButton(trdReturn,trdReturnP);
         btnReturn.setPosition(ANCHO/2-btnReturn.getWidth()/2,2*ALTO/10);
