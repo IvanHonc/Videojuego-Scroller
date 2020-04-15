@@ -55,8 +55,8 @@ class PantallaJuego extends Pantalla {
         camaraHUD.update();
         vistaHUD = new StretchViewport(ANCHO,ALTO,camaraHUD);
         Skin skin = new Skin();
-        skin.add("fondo", new Texture("padBack.png"));
-        skin.add("boton", new Texture("padKnob.png"));
+        skin.add("fondo", new Texture("Joystick.png"));
+        skin.add("boton", new Texture("SmallHandle.png"));
         Touchpad.TouchpadStyle estilo = new Touchpad.TouchpadStyle();
         estilo.background = skin.getDrawable("fondo");
         estilo.knob = skin.getDrawable("boton");
@@ -89,13 +89,13 @@ class PantallaJuego extends Pantalla {
     private void cargarMapa() {
         AssetManager manager = new AssetManager();
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-        manager.load("mapaMario1.tmx", TiledMap.class);
-        manager.load("marioBros.mp3",Music.class);
+        manager.load("mapaTutorial.tmx", TiledMap.class);
+        manager.load("musicaNueva.mp3",Music.class);
         manager.load("moneda.mp3", Sound.class);
         manager.finishLoading(); //carga
-        mapa = manager.get("mapaMario1.tmx");
+        mapa = manager.get("mapaTutorial.tmx");
         rendererMapa = new OrthogonalTiledMapRenderer(mapa);
-        audioFondo = manager.get("marioBros.mp3");
+        audioFondo = manager.get("musicaNueva.mp3");
         audioFondo.setLooping(true); //infinita
         audioFondo.play();
         //efectos
@@ -104,7 +104,7 @@ class PantallaJuego extends Pantalla {
 
     @Override
     public void render(float delta) {
-        borrarPantalla(1,0,0);
+        borrarPantalla(.11f,.42f,.60f);
         batch.setProjectionMatrix(camara.combined);
         rendererMapa.setView(camara);
         rendererMapa.render();
