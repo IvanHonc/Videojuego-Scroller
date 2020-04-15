@@ -16,6 +16,14 @@ public class PantallaAcercaDe extends Pantalla{
     private Texture texturaFondo;
 
     private Texto textoTitulo;
+    private Texto textoDescripcion1;
+    private Texto textoDescripcion2;
+    private Texto textoDescripcion3;
+    private Texto textoDescripcion4;
+    private String descripcion1 = "Desarrolladores:";
+    private String descripcion2 = "Ivan Honc, Bruno Vazquez, Jesus Alcala y Emiliano Heredia";
+    private String descripcion3 = "Desarrollado para la clase de desarrollo de videojuegos.";
+    private String descripcion4 = "Semestre Febrero-Junio 2020";
 
     public PantallaAcercaDe(Juego juego) {
         this.juego=juego;
@@ -61,6 +69,14 @@ public class PantallaAcercaDe extends Pantalla{
         //Texto
         textoTitulo = new Texto("fuenteTecno.fnt");
         textoTitulo.render(batch, "Acerca De", ANCHO/2, ALTO-ALTO/12);
+        textoDescripcion1 = new Texto("fuenteTecnoChica.fnt");
+        textoDescripcion1.render(batch, descripcion1, ANCHO/2, ALTO-ALTO/4);
+        textoDescripcion2 = new Texto("fuenteTecnoChica.fnt");
+        textoDescripcion2.render(batch, descripcion2, ANCHO/2, ALTO-5*ALTO/16);
+        textoDescripcion3 = new Texto("fuenteTecnoChica.fnt");
+        textoDescripcion3.render(batch, descripcion3, ANCHO/2, ALTO-7*ALTO/16);
+        textoDescripcion4 = new Texto("fuenteTecnoChica.fnt");
+        textoDescripcion4.render(batch, descripcion4, ANCHO/2, ALTO-9*ALTO/16);
         batch.end();
         escenaAD.draw();
     }
