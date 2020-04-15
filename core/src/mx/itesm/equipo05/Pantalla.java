@@ -8,19 +8,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 public abstract class Pantalla implements Screen
 {
     // Atributos disponibles en todas las clases del proyecto
     public static final float ANCHO = 1280;
     public static final float ALTO = 720;
-
+    public boolean on_off;
     // Atributos disponibles solo en las subclases
     // Todas las pantallas tienen una cámara y una vista
     protected OrthographicCamera camara;
     protected Viewport vista;
     // Todas las pantallas dibujan algo :)
     protected SpriteBatch batch;
-
     // Constructor, inicializa los objetos camara, vista, batch
     public Pantalla() {
         // Crea la cámara con las dimensiones del mundo
@@ -32,14 +36,22 @@ public abstract class Pantalla implements Screen
         vista = new StretchViewport(ANCHO, ALTO, camara);
         // El objeto que administra los trazos gráficos
         batch = new SpriteBatch();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("texto.txt"));
+            on_off=Boolean.parseBoolean(reader.readLine());
+            System.out.println(on_off);
+            reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
     // Borra la pantalla con fondo negro
     protected void borrarPantalla() {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
-
     // Borra la pantalla con el color RGB (r,g,b)
     protected void borrarPantalla(float r, float g, float b) {
         Gdx.gl.glClearColor(r,g,b,1);
