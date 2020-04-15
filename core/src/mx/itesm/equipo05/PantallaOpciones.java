@@ -14,7 +14,7 @@ public class PantallaOpciones extends Pantalla{
     private Stage escenaOpc;
     private final Juego juego;
     private Texture texturaFondo;
-
+    private boolean on_off;
     private Texto textoTitulo;
 
     public PantallaOpciones(Juego juego) {
@@ -24,6 +24,7 @@ public class PantallaOpciones extends Pantalla{
     @Override
     public void show() {
         texturaFondo = new Texture("fondoSpace.jpg");
+        on_off=true;
         crear();
     }
 
@@ -41,9 +42,13 @@ public class PantallaOpciones extends Pantalla{
         TextureRegionDrawable trdMusica = new TextureRegionDrawable(new TextureRegion(texturaBtnMusica));
         Texture texturaBtnMusicaNo = new Texture("btnMusicaNo.png");
         TextureRegionDrawable trdMusicaNo = new TextureRegionDrawable(new TextureRegion(texturaBtnMusicaNo));
-        ImageButton btnMusica = new ImageButton(trdMusica,trdMusicaNo);
-        btnMusica.setPosition(ANCHO/2-btnMusica.getWidth()/2,ALTO/2);
-
+        ImageButton btnMusica;
+        if(on_off==true) {
+            btnMusica = new ImageButton(trdMusica, trdMusicaNo);
+        }else{
+            btnMusica = new ImageButton(trdMusicaNo, trdMusica);
+        }
+        btnMusica.setPosition(ANCHO / 2 - btnMusica.getWidth() / 2, ALTO / 2);
         //listener
         btnReturn.addListener(new ClickListener() {
             @Override
@@ -56,7 +61,12 @@ public class PantallaOpciones extends Pantalla{
         btnMusica.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //Cambiar de imagen de botón
+                if(on_off==true){
+                    on_off=false;
+                }else{
+                    on_off=true;
+                }
+                crear();
                 //Desactivar Música
             }
         });
