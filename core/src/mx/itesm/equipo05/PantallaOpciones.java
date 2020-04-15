@@ -29,15 +29,20 @@ public class PantallaOpciones extends Pantalla{
 
     private void crear() {
         escenaOpc=new Stage(vista);
+
         Texture texturaBtnReturn = new Texture("btnAtras.png");
         TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(texturaBtnReturn));
-
-        //img btn presionado
-
         Texture texturaBtnReturnP = new Texture("btnAtrasPresionado.png");
         TextureRegionDrawable trdReturnP = new TextureRegionDrawable(new TextureRegion(texturaBtnReturnP));
         ImageButton btnReturn = new ImageButton(trdReturn,trdReturnP);
         btnReturn.setPosition(ANCHO/2-btnReturn.getWidth()/2,2*ALTO/10);
+
+        Texture texturaBtnMusica = new Texture("btnMusicaSi.png");
+        TextureRegionDrawable trdMusica = new TextureRegionDrawable(new TextureRegion(texturaBtnMusica));
+        Texture texturaBtnMusicaNo = new Texture("btnMusicaNo.png");
+        TextureRegionDrawable trdMusicaNo = new TextureRegionDrawable(new TextureRegion(texturaBtnMusicaNo));
+        ImageButton btnMusica = new ImageButton(trdMusica,trdMusicaNo);
+        btnMusica.setPosition(ANCHO/2-btnMusica.getWidth()/2,ALTO/2);
 
         //listener
         btnReturn.addListener(new ClickListener() {
@@ -47,7 +52,16 @@ public class PantallaOpciones extends Pantalla{
                 juego.setScreen(new PantallaMenu(juego));
             }
         });
+
+        btnMusica.addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //Cambiar de imagen de botón
+                //Desactivar Música
+            }
+        });
         escenaOpc.addActor(btnReturn);
+        escenaOpc.addActor(btnMusica);
         Gdx.input.setInputProcessor(escenaOpc);
     }
 
