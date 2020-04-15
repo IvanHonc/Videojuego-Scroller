@@ -39,7 +39,6 @@ public abstract class Pantalla implements Screen
         try {
             BufferedReader reader = new BufferedReader(new FileReader("texto.txt"));
             on_off=Boolean.parseBoolean(reader.readLine());
-            System.out.println(on_off);
             reader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
