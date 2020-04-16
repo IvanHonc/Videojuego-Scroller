@@ -95,7 +95,7 @@ class PantallaMenu extends Pantalla{
         batch.begin();
         batch.draw(texturaFondo, 0, 0);
         textoTitulo = new Texto("fuenteTecno.fnt");
-        textoTitulo.render(batch, "Ultimate Scroller", ANCHO/2, ALTO-ALTO/12);
+        textoTitulo.render(batch, "Bullet Time Reloaded", ANCHO/2, ALTO-ALTO/12);
         batch.end();
         escenaMenu.draw();
 

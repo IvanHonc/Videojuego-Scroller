@@ -1,6 +1,7 @@
 package mx.itesm.equipo05;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -10,16 +11,25 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.util.Iterator;
 
 class PantallaJuego extends Pantalla {
     private final Juego juego;
@@ -33,8 +43,12 @@ class PantallaJuego extends Pantalla {
     private Personaje mario;
     //hud joystick
     private Stage escenaHUD; //controles
-    private OrthographicCamera camaraHUD;
+    private OrthographicCamera camaraHUD, scrollingCamera;
     private Viewport vistaHUD;
+    private TiledMapTileLayer  collisionObjectLayer;
+    private MapObjects objects;
+    private boolean pause = false;
+    private boolean pauseHelper = true;
 
     public PantallaJuego(Juego juego) {
         this.juego = juego;
@@ -53,7 +67,10 @@ class PantallaJuego extends Pantalla {
         camaraHUD = new OrthographicCamera(ANCHO, ALTO);
         camaraHUD.position.set(ANCHO/2, ALTO/2,0);
         camaraHUD.update();
-        vistaHUD = new StretchViewport(ANCHO,ALTO,camaraHUD);
+        scrollingCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        scrollingCamera.translate(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+        scrollingCamera.update();
+        vistaHUD = new ExtendViewport(ANCHO,ALTO,camaraHUD);
         Skin skin = new Skin();
         skin.add("fondo", new Texture("Joystick.png"));
         skin.add("boton", new Texture("SmallHandle.png"));
@@ -65,15 +82,13 @@ class PantallaJuego extends Pantalla {
         pad.setBounds(16,16,256,256);
         pad.setColor(1,1,1,0.8f);
         //eventos
-        pad.addListener(new ChangeListener() {
+       pad.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Touchpad pad = (Touchpad)actor;
-                if (pad.getKnobPercentX()>0 || pad.getKnobPercentX()<0){
-                    mario.setEstado(Personaje.EstadoMovimiento.CAMINANDO);
-                }else{
-                    mario.setEstado(Personaje.EstadoMovimiento.QUIETO);
-                }
+                mario.setTouchPad(pad.getKnobPercentY());
+
+
             }
         });
         escenaHUD = new Stage(vistaHUD);
@@ -82,11 +97,12 @@ class PantallaJuego extends Pantalla {
 
     private void cargarMario() {
         Texture texturaMario = new Texture("marioSprite.png");
-        mario = new Personaje(texturaMario,100,64);
+        mario = new Personaje(texturaMario,100,64, ANCHO, ALTO);
 
     }
 
     private void cargarMapa() {
+        int objectLayerId = 2;
         AssetManager manager = new AssetManager();
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         manager.load("mapaTutorial.tmx", TiledMap.class);
@@ -102,20 +118,70 @@ class PantallaJuego extends Pantalla {
         }
         //efectos
         efecto = manager.get("moneda.mp3");
+
+        objects = mapa.getLayers().get(objectLayerId).getObjects();
     }
 
     @Override
     public void render(float delta) {
-        borrarPantalla(.11f,.42f,.60f);
-        batch.setProjectionMatrix(camara.combined);
-        rendererMapa.setView(camara);
-        rendererMapa.render();
-        batch.begin();
-        mario.render(batch);
-        batch.end();
-        //HUD
-        batch.setProjectionMatrix(camaraHUD.combined);
-        escenaHUD.draw();
+
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            // Use a helper so that a held-down button does not continuously switch between states with every tick
+            if (pauseHelper) {
+                pause = !pause;
+                pauseHelper = false;
+            }
+        }
+        else {
+            pauseHelper = true;
+        }
+        if(!pause) {
+            borrarPantalla(.11f, .42f, .60f);
+            batch.setProjectionMatrix(camara.combined);
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || mario.getMovimiento() == Personaje.EstadoMovimiento.CAMINANDO) {
+                mario.setMovimiento(Personaje.EstadoMovimiento.CAMINANDO);
+                if (mario.getReady()) {
+                    scrollingCamera.translate(5, 0);
+                    scrollingCamera.update();
+                }
+            }
+
+            rendererMapa.render();
+
+
+            rendererMapa.setView(scrollingCamera);
+            System.out.println("------------------------------------");
+            Rectangle playerRect = new Rectangle(scrollingCamera.position.x - ANCHO / 4 + mario.getX(), mario.getY(), mario.getSizex(), mario.getSizey());
+            for (RectangleMapObject rectangleObject : objects.getByType(RectangleMapObject.class)) {
+                Rectangle rectangle = rectangleObject.getRectangle();
+                if (Intersector.overlaps(rectangle, playerRect)) {
+                    System.out.println("choque");
+                }
+            }
+
+            batch.begin();
+
+
+            mario.render(batch);
+            batch.end();
+            //HUD
+            batch.setProjectionMatrix(camaraHUD.combined);
+            escenaHUD.draw();
+        } else {
+
+            borrarPantalla(.11f, .42f, .60f);
+            batch.setProjectionMatrix(camara.combined);
+            scrollingCamera.update();
+            camara.update();
+            rendererMapa.render();
+            rendererMapa.setView(scrollingCamera);
+            batch.begin();
+
+            mario.render(batch, true);
+            batch.end();
+            batch.setProjectionMatrix(camaraHUD.combined);
+            escenaHUD.draw();
+        }
     }
 
     @Override
