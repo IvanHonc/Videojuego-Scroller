@@ -18,13 +18,18 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -49,6 +54,7 @@ class PantallaJuego extends Pantalla {
     private MapObjects objects;
     private boolean pause = false;
     private boolean pauseHelper = true;
+    private ImageButton btnReturn;
 
     public PantallaJuego(Juego juego) {
         this.juego = juego;
@@ -72,6 +78,7 @@ class PantallaJuego extends Pantalla {
         scrollingCamera.update();
         vistaHUD = new ExtendViewport(ANCHO,ALTO,camaraHUD);
         Skin skin = new Skin();
+
         skin.add("fondo", new Texture("Joystick.png"));
         skin.add("boton", new Texture("SmallHandle.png"));
         Touchpad.TouchpadStyle estilo = new Touchpad.TouchpadStyle();
@@ -87,11 +94,29 @@ class PantallaJuego extends Pantalla {
             public void changed(ChangeEvent event, Actor actor) {
                 Touchpad pad = (Touchpad)actor;
                 mario.setTouchPad(pad.getKnobPercentY());
-
-
             }
         });
         escenaHUD = new Stage(vistaHUD);
+        Texture texturaBtnReturn = new Texture("btnAtras.png");
+        TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(texturaBtnReturn));
+
+        //img btn presionado
+
+        Texture texturaBtnReturnP = new Texture("btnAtrasPresionado.png");
+        TextureRegionDrawable trdReturnP = new TextureRegionDrawable(new TextureRegion(texturaBtnReturnP));
+        btnReturn = new ImageButton(trdReturn,trdReturnP);
+        btnReturn.setPosition(ANCHO/2-btnReturn.getWidth()/2,ALTO/2);
+        btnReturn.setVisible(false);
+        //listener
+        btnReturn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                juego.setScreen(new PantallaMenu(juego));
+            }
+        });
+
+        escenaHUD.addActor(btnReturn);
         escenaHUD.addActor(pad);
     }
 
@@ -124,7 +149,7 @@ class PantallaJuego extends Pantalla {
 
     @Override
     public void render(float delta) {
-
+        btnReturn.setVisible(false);
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             // Use a helper so that a held-down button does not continuously switch between states with every tick
             if (pauseHelper) {
@@ -168,7 +193,7 @@ class PantallaJuego extends Pantalla {
             batch.setProjectionMatrix(camaraHUD.combined);
             escenaHUD.draw();
         } else {
-
+            btnReturn.setVisible(true);
             borrarPantalla(.11f, .42f, .60f);
             batch.setProjectionMatrix(camara.combined);
             scrollingCamera.update();
@@ -176,7 +201,6 @@ class PantallaJuego extends Pantalla {
             rendererMapa.render();
             rendererMapa.setView(scrollingCamera);
             batch.begin();
-
             mario.render(batch, true);
             batch.end();
             batch.setProjectionMatrix(camaraHUD.combined);
