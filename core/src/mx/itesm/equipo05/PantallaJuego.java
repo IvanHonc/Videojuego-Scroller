@@ -179,12 +179,12 @@ class PantallaJuego extends Pantalla {
                 }
             }
             rendererMapa.render();
-            //if(scrollingCamera.position.x==326.0){                Este lo pones para hacer el de error y tienes que poner el de abajo en comentario, chocas con el tronco del principio y tienes que cmabiar en la clase FinDelJuego el texto a que digas que ganaste
-               // juego.setScreen(new FinDelJuego(juego));
-            //}
-            if(scrollingCamera.position.x==3872.0){
+            if(scrollingCamera.position.x==326.0){
                 juego.setScreen(new FinDelJuego(juego));
             }
+            //if(scrollingCamera.position.x==3872.0){
+            //    juego.setScreen(new FinDelJuego(juego));
+            //}
             System.out.println(scrollingCamera.position.x);
             rendererMapa.setView(scrollingCamera);
             System.out.println("------------------------------------");

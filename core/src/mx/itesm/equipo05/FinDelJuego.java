@@ -60,7 +60,7 @@ public class FinDelJuego extends Pantalla{
         batch.draw(texturaFondo, 0, 0);
         //Texto
         textoTitulo = new Texto("fuenteTecno.fnt");
-        textoTitulo.render(batch, "Ganaste", ANCHO/2, ALTO-ALTO/12);
+        textoTitulo.render(batch, "Perdiste", ANCHO/2, ALTO-ALTO/12);
         batch.end();
         escenaAD.draw();
     }
