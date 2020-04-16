@@ -97,7 +97,7 @@ class PantallaJuego extends Pantalla {
 
     private void cargarMario() {
         Texture texturaMario = new Texture("marioSprite.png");
-        mario = new Personaje(texturaMario,100,64, ANCHO, ALTO);
+        mario = new Personaje(texturaMario,100,250, ANCHO, ALTO);
 
     }
 
@@ -155,6 +155,8 @@ class PantallaJuego extends Pantalla {
             for (RectangleMapObject rectangleObject : objects.getByType(RectangleMapObject.class)) {
                 Rectangle rectangle = rectangleObject.getRectangle();
                 if (Intersector.overlaps(rectangle, playerRect)) {
+                    juego.setScreen(new PantallaMenu(juego));
+                    audioFondo.stop();
                     System.out.println("choque");
                 }
             }
