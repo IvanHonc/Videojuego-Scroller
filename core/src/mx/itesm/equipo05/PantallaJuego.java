@@ -34,7 +34,14 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+import javax.swing.Timer;
 
 class PantallaJuego extends Pantalla {
     private final Juego juego;
@@ -59,6 +66,7 @@ class PantallaJuego extends Pantalla {
     public PantallaJuego(Juego juego) {
         this.juego = juego;
     }
+
 
     @Override
     public void show() {
@@ -123,7 +131,6 @@ class PantallaJuego extends Pantalla {
     private void cargarMario() {
         Texture texturaMario = new Texture("marioSprite.png");
         mario = new Personaje(texturaMario,100,64, ANCHO, ALTO);
-
     }
 
     private void cargarMapa() {
@@ -164,16 +171,21 @@ class PantallaJuego extends Pantalla {
             borrarPantalla(.11f, .42f, .60f);
             batch.setProjectionMatrix(camara.combined);
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || mario.getMovimiento() == Personaje.EstadoMovimiento.CAMINANDO) {
+
                 mario.setMovimiento(Personaje.EstadoMovimiento.CAMINANDO);
                 if (mario.getReady()) {
-                    scrollingCamera.translate(5, 0);
+                    scrollingCamera.translate(2, 0);
                     scrollingCamera.update();
                 }
             }
-
             rendererMapa.render();
-
-
+            //if(scrollingCamera.position.x==326.0){                Este lo pones para hacer el de error y tienes que poner el de abajo en comentario, chocas con el tronco del principio y tienes que cmabiar en la clase FinDelJuego el texto a que digas que ganaste
+               // juego.setScreen(new FinDelJuego(juego));
+            //}
+            if(scrollingCamera.position.x==3872.0){
+                juego.setScreen(new FinDelJuego(juego));
+            }
+            System.out.println(scrollingCamera.position.x);
             rendererMapa.setView(scrollingCamera);
             System.out.println("------------------------------------");
             Rectangle playerRect = new Rectangle(scrollingCamera.position.x - ANCHO / 4 + mario.getX(), mario.getY(), mario.getSizex(), mario.getSizey());

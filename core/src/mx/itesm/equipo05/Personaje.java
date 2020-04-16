@@ -17,7 +17,7 @@ class Personaje extends Object {
     private float sizex=32, sizey=64;
     private float width, height, knobPercentY;
     private EstadoMovimiento estado = EstadoMovimiento.QUIETO;
-    private final int MAX_VEL = 15;
+    private final int MAX_VEL = 2;
 
     public float getX(){return x;}
     public float getY(){return y;}
